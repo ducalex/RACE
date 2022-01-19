@@ -37,9 +37,9 @@ extern "C" {
 /* Maximum ROM size is 4 megabytes */
 #define MAINROM_SIZE_MAX (4*1024*1024)
 
-extern unsigned char mainram[];			/* All RAM areas */
-extern unsigned char mainrom[];			/* ROM image area */
-extern unsigned char cpurom[];			/* Bios ROM image area */
+extern unsigned char *mainram;			/* All RAM areas */
+extern unsigned char *mainrom;			/* ROM image area */
+extern unsigned char *cpurom;			/* Bios ROM image area */
 
 /* TLCS 900h memory */
 extern unsigned char *cpuram;

@@ -33,7 +33,8 @@ extern int gfx_hacks;
  * A graphics buffer holds number referencing to the color from
  * the "total palette" for that system.
  */
-int    totalpalette[32*32*32];
+#define NGPC_TO_SDL16(col) totalpalette[col & 0x0FFF]
+int    totalpalette[4096];
 
 /* Allows application of a 'dark filter' to reduce the
  * glare of white backgrounds when viewing NGP content

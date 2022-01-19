@@ -41,11 +41,11 @@ unsigned char cpuram[0x08a0];
 
 /* regular work ram (32 kbytes?)
  * on the gameboy maximum of 128kbyte of RAM is possible, plus some internal ram (64KB) */
-unsigned char __attribute__ ((__aligned__(4))) mainram[(64+32+128)*1024];
+unsigned char __attribute__ ((__aligned__(4))) *mainram; // (64+32+128)*1024
 // rom area for roms (4 Megabyte)
-unsigned char __attribute__ ((__aligned__(4))) mainrom[MAINROM_SIZE_MAX];
+unsigned char __attribute__ ((__aligned__(4))) *mainrom; // MAINROM_SIZE_MAX
 // cpu internal ROM including vector table starting at 0xff0000
-unsigned char __attribute__ ((__aligned__(4))) cpurom[256*1024];//prob only needs 0x10000
+unsigned char __attribute__ ((__aligned__(4))) *cpurom; // 256*1024       // prob only needs 0x10000
 //
 unsigned char __attribute__ ((__aligned__(4))) *cpuram;
 // declare ldc registers
@@ -370,7 +370,8 @@ void mem_init(void)
 	unsigned int i;
 
 	cpuram = mainram;
-	memset(&mainram,0,sizeof(mainram));
+	memset(mainram,0,(64+32+128)*1024);
+
     switch(m_emuInfo.machine) {
 	case NGP:
 	case NGPC:
@@ -378,7 +379,7 @@ void mem_init(void)
 		if(!loadBIOS())
 		{
 		    realBIOSloaded = 0;
-            memset(&cpurom,0,sizeof(cpurom));
+            memset(cpurom,0,256*1024);
 
             //in theory, if we've loaded the BIOS, we shouldn't need much of this, but good luck with that.
             // setup fake jump table for the additional bios calls

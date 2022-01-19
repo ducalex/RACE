@@ -462,7 +462,11 @@ bool retro_load_game(const struct retro_game_info *info)
    const unsigned char *content_data          = NULL;
    size_t content_size                        = 0;
    char content_path[_MAX_PATH];
-
+   
+   mainram = calloc(1, (64 + 32 + 128) * 1024);
+   mainrom = calloc(1, MAINROM_SIZE_MAX);
+   cpurom = calloc(1, 256 * 1024);
+   
    struct retro_input_descriptor desc[] = {
       { 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_LEFT,  "D-Pad Left" },
       { 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_UP,    "D-Pad Up" },
